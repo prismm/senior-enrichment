@@ -20,7 +20,7 @@ require('./models')
 
 // sync the db, creating it if necessary
 function sync() {
-    return db.sync({ force: true })
+    return db.sync()
         .then(ok => console.log(`Synced models to db ${connectionString}`))
         .catch(function(err) {
             console.error(err)

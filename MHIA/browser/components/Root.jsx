@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
+import NavBar from './NavBar';
 
-export default class Root extends Component {
-  constructor(props) {
-    super(props)
-  }
 
-  componentDidMount() {
-  }
-
-  render() { 
-    return (
-      <div>
-        <h1>placeholder for app</h1>
+export default function Root ({ children }) {
+  return (
+    <div>
+      <NavBar />
+      <div className="col-thirds">
+        {children}
       </div>
-    )
-  }
+    </div>
+  )
 }
