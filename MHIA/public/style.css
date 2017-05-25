@@ -2,4 +2,86 @@ h1 {
     font-family: Courier New, Courier, monospace;
     text-align: left;
     margin: 10px;
+    padding: 0 0 10px 0;
+    border-bottom: 1px dotted black;
+}
+
+Link {
+    color: peru;
+}
+
+a {
+    color: peru;
+    text-decoration: none;
+}
+
+.menu-item {
+    display: inline;
+    font-family: Courier New, Courier, monospace;
+    color: peru;
+    padding: 8px 12px;
+    border: 2px solid peru;
+    margin: 10px;
+}
+
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 8px 16px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.nav-links {
+    padding: 0 0 15px 0;
+    /*border-bottom: 1px groove black;*/
+}
+
+.btn:focus,
+.btn.focus {
+    color: black;
+    font-weight: bold;
+    /*background-color: peachpuff;
+    border-color: #000000;*/
+}
+
+.btn:hover {
+    color: black;
+    /*background-color: peachpuff;
+    border-color: #000000;*/
+}
+
+.btn:active,
+.btn.active {
+    color: black;
+    font-style: oblique;
+    font-weight: bolder;
+    /*background-color: peachpuff;*/
+    /*border-color: #000000;*/
+}
+
+.col-thirds {
+    width: 33.333333%;
+    float: left;
+    padding-right: 30px;
+}
+
+.col-fourths {
+    width: 25%;
+    float: left;
+    padding-right: 20px;
 }

@@ -7,7 +7,7 @@ const pkg = require('../package.json');
 
 const app = express();
 
-app.use(require('volleyball'));
+// app.use(require('volleyball'));
 
 const db = require('../db');
 

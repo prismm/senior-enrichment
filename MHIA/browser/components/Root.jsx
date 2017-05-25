@@ -6,8 +6,10 @@ export default function Root ({ children }) {
   return (
     <div>
       <NavBar />
-      <div className="col-thirds">
-        {children}
+      <div className="appbody">
+        <div className="col-thirds">
+          { children }
+        </div>
       </div>
     </div>
   )
