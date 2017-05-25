@@ -69,21 +69,25 @@
 	
 	var _Root2 = _interopRequireDefault(_Root);
 	
-	var _Campuses = __webpack_require__(272);
+	var _CampusesContainer = __webpack_require__(320);
 	
-	var _Campuses2 = _interopRequireDefault(_Campuses);
+	var _CampusesContainer2 = _interopRequireDefault(_CampusesContainer);
+	
+	var _StudentsContainer = __webpack_require__(321);
+	
+	var _StudentsContainer2 = _interopRequireDefault(_StudentsContainer);
 	
 	var _Students = __webpack_require__(273);
 	
 	var _Students2 = _interopRequireDefault(_Students);
 	
-	var _ViewCampus = __webpack_require__(274);
+	var _ViewCampusContainer = __webpack_require__(322);
 	
-	var _ViewCampus2 = _interopRequireDefault(_ViewCampus);
+	var _ViewCampusContainer2 = _interopRequireDefault(_ViewCampusContainer);
 	
-	var _ViewStudent = __webpack_require__(275);
+	var _ViewStudentContainer = __webpack_require__(323);
 	
-	var _ViewStudent2 = _interopRequireDefault(_ViewStudent);
+	var _ViewStudentContainer2 = _interopRequireDefault(_ViewStudentContainer);
 	
 	var _axios = __webpack_require__(276);
 	
@@ -93,11 +97,19 @@
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _campus = __webpack_require__(317);
+	var _campus = __webpack_require__(318);
 	
-	var _student = __webpack_require__(318);
+	var _student = __webpack_require__(319);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var NotFound = function NotFound() {
+	  return _react2.default.createElement(
+	    'h1',
+	    null,
+	    '404.. This page is not found!'
+	  );
+	};
 	
 	var onRootEnter = function onRootEnter() {
 	  Promise.all([_axios2.default.get('/api/campus'), _axios2.default.get('/api/student')]).then(function (responses) {
@@ -133,10 +145,12 @@
 	    _react2.default.createElement(
 	      _reactRouter.Route,
 	      { path: '/', component: _Root2.default, onEnter: onRootEnter },
-	      _react2.default.createElement(_reactRouter.Route, { path: '/campus', component: _Campuses2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: '/campus/:campusId', component: _ViewCampus2.default, onEnter: onCampusEnter }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '/campus', component: _CampusesContainer2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '/campus/:campusId', component: _ViewCampusContainer2.default, onEnter: onCampusEnter }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/student', component: _Students2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: '/student/:studentId', component: _ViewStudent2.default, onEnter: onStudentEnter }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '/student', component: _StudentsContainer2.default }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '/student/:studentId', component: _ViewStudentContainer2.default, onEnter: onStudentEnter }),
+	      _react2.default.createElement(_reactRouter.Route, { path: '*', component: NotFound }),
 	      _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/campus' })
 	    )
 	  )
@@ -29642,11 +29656,6 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	            'h3',
-	            null,
-	            'PLACEHOLDER FOR Campuses'
-	        ),
-	        _react2.default.createElement(
 	            'div',
 	            { className: 'row' },
 	            campuses && campuses.map(function (campus) {
@@ -29656,24 +29665,25 @@
 	                    _react2.default.createElement(
 	                        _reactRouter.Link,
 	                        { className: 'thumbnail', to: '/campus/' + campus.id },
-	                        _react2.default.createElement('img', { src: campus.imageLink }),
+	                        _react2.default.createElement('img', { src: campus.imageLink, width: '200', height: '200' }),
 	                        _react2.default.createElement(
 	                            'div',
 	                            { className: 'caption' },
 	                            _react2.default.createElement(
-	                                'h5',
+	                                'h4',
 	                                null,
 	                                _react2.default.createElement(
 	                                    'span',
 	                                    null,
 	                                    campus.name
+	                                ),
+	                                ' ',
+	                                _react2.default.createElement('br', null),
+	                                _react2.default.createElement(
+	                                    'small',
+	                                    null,
+	                                    ' students'
 	                                )
-	                            ),
-	                            _react2.default.createElement(
-	                                'small',
-	                                null,
-	                                campus.students.length,
-	                                ' students'
 	                            )
 	                        )
 	                    )
@@ -33340,7 +33350,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
 	var _redux = __webpack_require__(191);
@@ -33357,11 +33367,12 @@
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
+	var _reduxDevtoolsExtension = __webpack_require__(317);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// https://github.com/gaearon/redux-thunk
-	
-	exports.default = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)())); // https://github.com/evgenyrodionov/redux-logger
+	// https://github.com/evgenyrodionov/redux-logger
+	exports.default = (0, _redux.createStore)(_reducers2.default, (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)()))); // https://github.com/gaearon/redux-thunk
 
 /***/ }),
 /* 306 */
@@ -34412,6 +34423,32 @@
 /* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	var compose = __webpack_require__(191).compose;
+	
+	exports.__esModule = true;
+	exports.composeWithDevTools = (
+	  typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+	    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ :
+	    function() {
+	      if (arguments.length === 0) return undefined;
+	      if (typeof arguments[0] === 'object') return compose;
+	      return compose.apply(null, arguments);
+	    }
+	);
+	
+	exports.devToolsEnhancer = (
+	  typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__ ?
+	    window.__REDUX_DEVTOOLS_EXTENSION__ :
+	    function() { return function(noop) { return noop; } }
+	);
+
+
+/***/ }),
+/* 318 */
+/***/ (function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -34450,7 +34487,7 @@
 	};
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34489,6 +34526,118 @@
 	        });
 	    };
 	};
+
+/***/ }),
+/* 320 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _Campuses = __webpack_require__(272);
+	
+	var _Campuses2 = _interopRequireDefault(_Campuses);
+	
+	var _reactRedux = __webpack_require__(182);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        campuses: state.campuses.list
+	    };
+	};
+	
+	var CampusesContainer = (0, _reactRedux.connect)(mapStateToProps)(_Campuses2.default);
+	
+	exports.default = CampusesContainer;
+
+/***/ }),
+/* 321 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _Students = __webpack_require__(273);
+	
+	var _Students2 = _interopRequireDefault(_Students);
+	
+	var _reactRedux = __webpack_require__(182);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        students: state.students.list
+	    };
+	};
+	
+	var StudentsContainer = (0, _reactRedux.connect)(mapStateToProps)(_Students2.default);
+	
+	exports.default = StudentsContainer;
+
+/***/ }),
+/* 322 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _ViewCampus = __webpack_require__(274);
+	
+	var _ViewCampus2 = _interopRequireDefault(_ViewCampus);
+	
+	var _reactRedux = __webpack_require__(182);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        selectedCampus: state.campuses.selected
+	    };
+	};
+	
+	var ViewCampusContainer = (0, _reactRedux.connect)(mapStateToProps)(_ViewCampus2.default);
+	
+	exports.default = ViewCampusContainer;
+
+/***/ }),
+/* 323 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _ViewStudent = __webpack_require__(275);
+	
+	var _ViewStudent2 = _interopRequireDefault(_ViewStudent);
+	
+	var _reactRedux = __webpack_require__(182);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        selectedStudent: state.students.selected
+	    };
+	};
+	
+	var ViewStudentContainer = (0, _reactRedux.connect)(mapStateToProps)(_ViewStudent2.default);
+	
+	exports.default = ViewStudentContainer;
 
 /***/ })
 /******/ ]);

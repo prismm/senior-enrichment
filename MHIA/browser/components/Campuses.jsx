@@ -6,18 +6,18 @@ export default function Campuses(props) {
 
     return (
         <div>
-            <h3>PLACEHOLDER FOR Campuses</h3>
+            {/*<h3>PLACEHOLDER FOR Campuses</h3>*/}
             <div className="row">
                 {
                 campuses && campuses.map(campus => (
                     <div className="col-thirds" key={ campus.id }>
                     <Link className="thumbnail" to={`/campus/${campus.id}`}>
-                        <img src={ campus.imageLink } />
+                        <img src={ campus.imageLink } width="200" height="200" />
                         <div className="caption">
-                        <h5>
-                            <span>{ campus.name }</span>
-                        </h5>
-                        <small>{ campus.students.length } students</small>
+                        <h4>
+                            <span>{ campus.name }</span> <br />
+                            <small> students</small>
+                        </h4>
                         </div>
                     </Link>
                     </div>

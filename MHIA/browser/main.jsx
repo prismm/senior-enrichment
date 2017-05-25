@@ -7,16 +7,19 @@ import { Router, Route, hashHistory, IndexRedirect } from 'react-router';
 
 //IMPORT COMPONENTS
 import Root from './components/Root';
-import Campuses from './components/Campuses';
+import CampusesContainer from './containers/CampusesContainer';
+import StudentsContainer from './containers/StudentsContainer';
 import Students from './components/Students';
-import ViewCampus from './components/ViewCampus';
-import ViewStudent from './components/ViewStudent';
+import ViewCampusContainer from './containers/ViewCampusContainer';
+import ViewStudentContainer from './containers/ViewStudentContainer';
 
 //MANAGE STORE
 import axios from 'axios';
 import store from './store';
 import {receiveCampuses, getCampusById} from './action-creators/campus'
 import {receiveStudents, getStudentById} from './action-creators/student'
+
+const NotFound = () => (<h1>404.. This page is not found!</h1>)
 
 const onRootEnter = function(){
   Promise.all([
@@ -45,10 +48,12 @@ render(
   <Provider store={store}>
     <Router history={hashHistory}>
       <Route path="/" component={Root} onEnter={onRootEnter}>
-        <Route path="/campus" component={Campuses} />
-        <Route path ="/campus/:campusId" component={ViewCampus} onEnter = {onCampusEnter} />
-        <Route path = "/student" component = {Students} />
-        <Route path = "/student/:studentId" component={ViewStudent} onEnter = {onStudentEnter} />
+        <Route path="/campus" component={CampusesContainer} />
+        <Route path ="/campus/:campusId" component={ViewCampusContainer} onEnter = {onCampusEnter} />
+          <Route path="/student" component={Students} />
+        <Route path = "/student" component = {StudentsContainer} />
+        <Route path = "/student/:studentId" component={ViewStudentContainer} onEnter = {onStudentEnter} />
+        <Route path="*" component={NotFound} />
         <IndexRedirect to="/campus" />
       </Route>
     </Router>

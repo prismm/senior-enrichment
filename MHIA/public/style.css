@@ -15,6 +15,11 @@ a {
     text-decoration: none;
 }
 
+h4 {
+    font-family: Courier New, Courier, monospace;
+    font-weight: bolder;
+}
+
 .menu-item {
     display: inline;
     font-family: Courier New, Courier, monospace;
@@ -75,7 +80,8 @@ a {
 }
 
 .col-thirds {
-    width: 33.333333%;
+    /*width: 33.333333%;*/
+    margin: 20px 20px 30px 10px;
     float: left;
     padding-right: 30px;
 }
