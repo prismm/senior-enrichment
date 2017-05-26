@@ -15,3 +15,4 @@ module.exports = {
 }
 
 Student.belongsTo(Campus);
+// Campus.belongsTo(Student);

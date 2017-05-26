@@ -1,8 +1,9 @@
-import { RECEIVE_CAMPUSES, RECEIVE_CAMPUS } from '../constants';
+import { RECEIVE_CAMPUSES, RECEIVE_CAMPUS, RECEIVE_CAMPUS_STUDENTS } from '../constants';
 
 const initialCampusState = {
     selected: {},
-    list: []
+    list: [],
+    campusStudents: []
 };
 
 export default function(state = initialCampusState, action) {
@@ -14,7 +15,11 @@ export default function(state = initialCampusState, action) {
             break;
 
         case RECEIVE_CAMPUS:
-            newState.selected = action.album;
+            newState.selected = action.campus;
+            break;
+
+        case RECEIVE_CAMPUS_STUDENTS:
+            newState.campusStudents = action.campusStudents;
             break;
 
         default:

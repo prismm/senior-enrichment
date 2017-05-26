@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router';
 
 export default function Campuses(props) {
-    const campuses = props.campuses;
 
+    const campuses = props.campuses.list;
+    const campusStudents = props.campuses.campusStudents;
     return (
         <div>
             {/*<h3>PLACEHOLDER FOR Campuses</h3>*/}
@@ -16,7 +17,7 @@ export default function Campuses(props) {
                         <div className="caption">
                         <h4>
                             <span>{ campus.name }</span> <br />
-                            <small> students</small>
+                            {/*<small> {campusStudents.length} students</small>*/}
                         </h4>
                         </div>
                     </Link>

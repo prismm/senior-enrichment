@@ -1,0 +1,6 @@
+"id","name","email","createdAt","updatedAt","campusId"
+1,"Priya Murthy","priya@priya.com","2017-05-24 17:18:34-04","2017-05-24 17:18:34-04",4
+2,"Harry Potter","harry@harry.com","2017-05-24 17:18:34-04","2017-05-24 17:18:34-04",1
+3,"Hermione Granger","hermione@hermione.com","2017-05-24 17:18:34-04","2017-05-24 17:18:34-04",1
+4,"Cedric Diggory","cedric@cedric.com","2017-05-24 17:18:34-04","2017-05-24 17:18:34-04",3
+5,"Draco Malfoy","draco@draco.com","2017-05-24 17:18:34-04","2017-05-24 17:18:34-04",2

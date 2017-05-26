@@ -2,6 +2,7 @@
 const router = require('express').Router();
 const models = require('../../db/models');
 const Campus = models.Campus;
+const Student = models.Student;
 module.exports = router;
 
 router.get('/', (req, res, next) => {
@@ -10,17 +11,31 @@ router.get('/', (req, res, next) => {
         .catch(next)
 })
 
-router.get('campusId', (req, res, next, id) => {
-    Campus.findById(id)
-        .then(campus => {
-            if (campus) res.json(campus);
-            else throw new Error('campus not found')
+router.param('campusId', (req, res, next, campusId) => {
+    Promise.all([
+            Campus.findById(campusId),
+            Student.findAll({
+                where: {
+                    campusId: campusId
+                },
+            })
+        ])
+        .then(([foundCampus, foundStudents]) => {
+            if (foundCampus) {
+                req.campus = foundCampus;
+                req.campus.students = foundStudents
+                next();
+                return null;
+            } else {
+                throw new Error('campus not found')
+            }
         })
         .catch(next)
 })
 
 router.get('/:campusId', (req, res) => {
-    res.json(req.campus)
+    res.json([req.campus, req.campus.students]);
+    // console.log(req)
 })
 
 router.put('/:campusId', (req, res, next, id) => {

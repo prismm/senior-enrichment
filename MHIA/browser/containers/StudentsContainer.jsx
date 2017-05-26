@@ -8,6 +8,8 @@ const mapStateToProps = (state) => {
     };
 };
 
+// const mapDispatchToProps =
+
 const StudentsContainer = connect(mapStateToProps)(Students);
 
 export default StudentsContainer;

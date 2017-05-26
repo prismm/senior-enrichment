@@ -29649,7 +29649,7 @@
 	
 	var mapStateToProps = function mapStateToProps(state) {
 	    return {
-	        campuses: state.campuses.list
+	        campuses: state.campuses
 	    };
 	};
 	
@@ -29677,8 +29677,9 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function Campuses(props) {
-	    var campuses = props.campuses;
 	
+	    var campuses = props.campuses.list;
+	    var campusStudents = props.campuses.campusStudents;
 	    return _react2.default.createElement(
 	        'div',
 	        null,
@@ -29705,12 +29706,7 @@
 	                                    campus.name
 	                                ),
 	                                ' ',
-	                                _react2.default.createElement('br', null),
-	                                _react2.default.createElement(
-	                                    'small',
-	                                    null,
-	                                    ' students'
-	                                )
+	                                _react2.default.createElement('br', null)
 	                            )
 	                        )
 	                    )
@@ -29745,6 +29741,8 @@
 	    };
 	};
 	
+	// const mapDispatchToProps =
+	
 	var StudentsContainer = (0, _reactRedux.connect)(mapStateToProps)(_Students2.default);
 	
 	exports.default = StudentsContainer;
@@ -29753,7 +29751,7 @@
 /* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -29764,6 +29762,8 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRouter = __webpack_require__(214);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function Students(props) {
@@ -29771,59 +29771,86 @@
 	    console.log("students", students);
 	    console.log("props", props);
 	    return _react2.default.createElement(
-	        "div",
+	        'div',
 	        null,
 	        _react2.default.createElement(
-	            "h3",
-	            null,
-	            "Our Students"
+	            'h3',
+	            { className: 'ourStudentsHeader' },
+	            'Our Students'
 	        ),
 	        _react2.default.createElement(
-	            "table",
+	            'table',
 	            null,
 	            _react2.default.createElement(
-	                "tbody",
+	                'tbody',
 	                null,
 	                _react2.default.createElement(
-	                    "tr",
-	                    { className: "columnHeaders" },
+	                    'tr',
+	                    { className: 'columnHeaders' },
 	                    _react2.default.createElement(
-	                        "td",
+	                        'td',
 	                        null,
-	                        "Student Name"
+	                        'Student Name'
 	                    ),
 	                    _react2.default.createElement(
-	                        "td",
+	                        'td',
 	                        null,
-	                        "Student Email"
+	                        'Student Email'
 	                    ),
 	                    _react2.default.createElement(
-	                        "td",
+	                        'td',
 	                        null,
-	                        "Student Campus"
+	                        'Campus'
 	                    )
 	                ),
-	                students && students.map(function (student) {
+	                students.length ? students.map(function (student) {
 	                    return _react2.default.createElement(
-	                        "tr",
+	                        'tr',
 	                        { key: student.id },
 	                        _react2.default.createElement(
-	                            "td",
+	                            'td',
 	                            null,
-	                            student.name
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: '/student/' + student.id },
+	                                student.name
+	                            )
 	                        ),
 	                        _react2.default.createElement(
-	                            "td",
+	                            'td',
 	                            null,
 	                            student.email
 	                        ),
 	                        _react2.default.createElement(
-	                            "td",
+	                            'td',
 	                            null,
-	                            student.campusId
+	                            student.campus ? _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: '/campus/' + student.campusId },
+	                                student.campus.name,
+	                                ' '
+	                            ) : _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                { to: '/campus/' + student.campusId },
+	                                props.selectedCampus.name,
+	                                ' '
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'td',
+	                            null,
+	                            _react2.default.createElement(
+	                                _reactRouter.Link,
+	                                null,
+	                                'X'
+	                            )
 	                        )
 	                    );
-	                })
+	                }) : _react2.default.createElement(
+	                    'small',
+	                    null,
+	                    '[...no students at this campus] '
+	                )
 	            )
 	        )
 	    );
@@ -29848,8 +29875,11 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
+	    console.log('selectedCampuses in container', state.campuses.selected);
 	    return {
-	        selectedCampus: state.campuses.selected
+	        selectedCampus: state.campuses.selected,
+	        campuses: state.campuses.list,
+	        campusStudents: state.campuses.campusStudents
 	    };
 	};
 	
@@ -29872,25 +29902,27 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _Students = __webpack_require__(275);
+	
+	var _Students2 = _interopRequireDefault(_Students);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function ViewCampus(props) {
-	    var selectedCampus = props.campus;
-	
+	    var selectedCampus = props.selectedCampus;
+	    var campusStudents = props.campusStudents;
+	    console.log("props on ViewCampus", props);
 	    return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'selectedCampus' },
+	        _react2.default.createElement('img', { src: selectedCampus.imageLink, width: '400', height: '400' }),
 	        _react2.default.createElement(
 	            'h3',
-	            null,
-	            'PLACEHOLDER FOR ViewCampus'
-	        ),
-	        _react2.default.createElement(
-	            'h3',
-	            null,
-	            '$',
+	            { className: 'selectedCampusName' },
+	            'CAMPUS: ',
 	            selectedCampus.name
-	        )
+	        ),
+	        _react2.default.createElement(_Students2.default, { students: campusStudents, selectedCampus: selectedCampus })
 	    );
 	}
 
@@ -33572,7 +33604,11 @@
 	            break;
 	
 	        case _constants.RECEIVE_CAMPUS:
-	            newState.selected = action.album;
+	            newState.selected = action.campus;
+	            break;
+	
+	        case _constants.RECEIVE_CAMPUS_STUDENTS:
+	            newState.campusStudents = action.campusStudents;
 	            break;
 	
 	        default:
@@ -33586,7 +33622,8 @@
 	
 	var initialCampusState = {
 	    selected: {},
-	    list: []
+	    list: [],
+	    campusStudents: []
 	};
 
 /***/ }),
@@ -33603,6 +33640,7 @@
 	
 	var RECEIVE_CAMPUSES = exports.RECEIVE_CAMPUSES = 'RECEIVE_CAMPUSES';
 	var RECEIVE_CAMPUS = exports.RECEIVE_CAMPUS = 'RECEIVE_CAMPUS';
+	var RECEIVE_CAMPUS_STUDENTS = exports.RECEIVE_CAMPUS_STUDENTS = 'RECEIVE_CAMPUS_STUDENTS';
 
 /***/ }),
 /* 313 */
@@ -34593,7 +34631,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.getCampusById = exports.receiveCampus = exports.receiveCampuses = undefined;
+	exports.getCampusById = exports.receiveCampusStudents = exports.receiveCampus = exports.receiveCampuses = undefined;
 	
 	var _constants = __webpack_require__(312);
 	
@@ -34617,10 +34655,19 @@
 	    };
 	};
 	
+	var receiveCampusStudents = exports.receiveCampusStudents = function receiveCampusStudents(campusStudents) {
+	    return {
+	        type: _constants.RECEIVE_CAMPUS_STUDENTS,
+	        campusStudents: campusStudents
+	    };
+	};
+	
 	var getCampusById = exports.getCampusById = function getCampusById(campusId) {
 	    return function (dispatch) {
 	        _axios2.default.get('/api/campus/' + campusId).then(function (campus) {
-	            dispatch(receiveCampus(campus.data));
+	            // console.log("testing action creator", campus.data[0], campus.data[1])
+	            dispatch(receiveCampus(campus.data[0]));
+	            dispatch(receiveCampusStudents(campus.data[1]));
 	        });
 	    };
 	};
