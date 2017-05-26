@@ -1,16 +1,16 @@
 import React from 'react';
 
-export default function AddForm () {
+export default function AddCampusForm () {
     return (
         <div>
-            <h2> PLACEHOLDER FOR AddForm </h2>
+            <h2> PLACEHOLDER FOR AddCampusForm </h2>
             <form>
                 <input />
                 <input />
                 <button
                 type="submit"
                 >
-                Add Instructor
+                Add Campus
               </button>
             </form>
         </div>

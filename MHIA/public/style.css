@@ -32,6 +32,8 @@ h4 {
 
 .ourStudentsHeader {
     font-style: italic;
+    text-decoration: underline;
+    margin: 0 0 20px 0;
 }
 
 table {
@@ -58,6 +60,43 @@ ul {
 li {
     font-size: 20px;
     padding: 5px 0 0 0;
+}
+
+input[type=text] {
+    /*width: 100%;*/
+    padding: 12px 25px;
+    /*margin: 4px 0;*/
+    display: inline;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.selectCampus {
+    border: 1px solid #ccc;
+    width: 120px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #fafafa url("img/icon-select.png") no-repeat 90% 50%;
+}
+
+select .selectCampus {
+    padding: 5px 8px;
+    width: 130%;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+}
+
+.selectCampus select:focus {
+    outline: none;
+}
+
+.deleteLink {
+    text-align: center;
+    padding: 0 0 0 30px;
 }
 
 .menu-item {

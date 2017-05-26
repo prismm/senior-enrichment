@@ -7,7 +7,7 @@ export default function Campuses(props) {
     const campusStudents = props.campuses.campusStudents;
     return (
         <div>
-            {/*<h3>PLACEHOLDER FOR Campuses</h3>*/}
+      
             <div className="row">
                 {
                 campuses && campuses.map(campus => (
@@ -17,7 +17,6 @@ export default function Campuses(props) {
                         <div className="caption">
                         <h4>
                             <span>{ campus.name }</span> <br />
-                            {/*<small> {campusStudents.length} students</small>*/}
                         </h4>
                         </div>
                     </Link>

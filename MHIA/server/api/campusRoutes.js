@@ -35,7 +35,6 @@ router.param('campusId', (req, res, next, campusId) => {
 
 router.get('/:campusId', (req, res) => {
     res.json([req.campus, req.campus.students]);
-    // console.log(req)
 })
 
 router.put('/:campusId', (req, res, next, id) => {

@@ -13,7 +13,6 @@ router.get('/', (req, res, next) => {
 
 router.param('studentId', (req, res, next, id) => {
     Student.findOne({ where: { id }, include: [Campus] })
-        // Student.findById(id)
         .then(foundStudent => {
             if (foundStudent) {
                 req.student = foundStudent;

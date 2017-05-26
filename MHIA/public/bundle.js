@@ -29737,7 +29737,8 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	    console.log("state on container", state);
 	    return {
-	        students: state.students.list
+	        students: state.students.list,
+	        campuses: state.campuses.list
 	    };
 	};
 	
@@ -29764,12 +29765,15 @@
 	
 	var _reactRouter = __webpack_require__(214);
 	
+	var _AddStudentForm = __webpack_require__(324);
+	
+	var _AddStudentForm2 = _interopRequireDefault(_AddStudentForm);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function Students(props) {
 	    var students = props.students;
-	    console.log("students", students);
-	    console.log("props", props);
+	    var campuses = props.campuses;
 	    return _react2.default.createElement(
 	        'div',
 	        null,
@@ -29841,7 +29845,7 @@
 	                            null,
 	                            _react2.default.createElement(
 	                                _reactRouter.Link,
-	                                null,
+	                                { className: 'deleteLink btn' },
 	                                'X'
 	                            )
 	                        )
@@ -29852,7 +29856,8 @@
 	                    '[...no students at this campus] '
 	                )
 	            )
-	        )
+	        ),
+	        _react2.default.createElement(_AddStudentForm2.default, { campuses: campuses })
 	    );
 	}
 
@@ -29911,7 +29916,7 @@
 	function ViewCampus(props) {
 	    var selectedCampus = props.selectedCampus;
 	    var campusStudents = props.campusStudents;
-	    console.log("props on ViewCampus", props);
+	
 	    return _react2.default.createElement(
 	        'div',
 	        { className: 'selectedCampus' },
@@ -29922,7 +29927,7 @@
 	            'CAMPUS: ',
 	            selectedCampus.name
 	        ),
-	        _react2.default.createElement(_Students2.default, { students: campusStudents, selectedCampus: selectedCampus })
+	        _react2.default.createElement(_Students2.default, { students: campusStudents, selectedCampus: selectedCampus, campuses: [selectedCampus] })
 	    );
 	}
 
@@ -33584,14 +33589,6 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// const initialState = {}
-	
-	// const rootReducer = function(state = initialState, action) {
-	//     switch (action.type) {
-	//         default: return state
-	//     }
-	// };
-	
 	var rootReducer = (0, _redux.combineReducers)({
 	    campuses: _campusReducer2.default,
 	    students: _studentReducer2.default
@@ -34729,6 +34726,86 @@
 	        });
 	    };
 	};
+
+/***/ }),
+/* 324 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = AddStudentForm;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function AddStudentForm(props) {
+	    var campuses = props.campuses;
+	    return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement(
+	            "h3",
+	            { className: "ourStudentsHeader" },
+	            " Enroll a New Student "
+	        ),
+	        _react2.default.createElement(
+	            "table",
+	            null,
+	            _react2.default.createElement(
+	                "tbody",
+	                null,
+	                _react2.default.createElement(
+	                    "tr",
+	                    null,
+	                    _react2.default.createElement(
+	                        "form",
+	                        null,
+	                        _react2.default.createElement(
+	                            "td",
+	                            null,
+	                            _react2.default.createElement("input", { type: "text", placeholder: "Name?", className: "studentNameInput" })
+	                        ),
+	                        _react2.default.createElement(
+	                            "td",
+	                            null,
+	                            _react2.default.createElement("input", { type: "text", placeholder: "Email?", className: "studentEmailInput" })
+	                        ),
+	                        _react2.default.createElement(
+	                            "td",
+	                            null,
+	                            _react2.default.createElement(
+	                                "select",
+	                                { className: "selectCampus" },
+	                                campuses && campuses.map(function (campus) {
+	                                    return _react2.default.createElement(
+	                                        "option",
+	                                        { value: campus.id },
+	                                        campus.name
+	                                    );
+	                                })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            "td",
+	                            null,
+	                            _react2.default.createElement(
+	                                "button",
+	                                { type: "submit" },
+	                                "Add Student"
+	                            )
+	                        )
+	                    )
+	                )
+	            )
+	        )
+	    );
+	}
 
 /***/ })
 /******/ ]);

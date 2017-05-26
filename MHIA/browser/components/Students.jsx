@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
+import AddStudentForm from './AddStudentForm'
 
 export default function Students(props) {
     const students = props.students;
-    console.log("students", students)
-    console.log("props", props)
+    const campuses = props.campuses;
     return (
         <div>
             <h3 className="ourStudentsHeader">Our Students</h3>
@@ -28,7 +28,7 @@ export default function Students(props) {
                                     : <Link to={`/campus/${student.campusId}`}>{ props.selectedCampus.name } </Link>}
                             </td>
                             <td>
-                                <Link>X</Link>
+                                <Link className="deleteLink btn">X</Link>
                             </td>
                         </tr>
                     ))
@@ -36,6 +36,7 @@ export default function Students(props) {
                     }
                 </tbody>
             </table>
+            <AddStudentForm campuses={campuses} />
         </div>
     )
 }

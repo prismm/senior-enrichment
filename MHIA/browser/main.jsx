@@ -50,7 +50,6 @@ render(
       <Route path="/" component={Root} onEnter={onRootEnter}>
         <Route path="/campus" component={CampusesContainer} />
         <Route path ="/campus/:campusId" component={ViewCampusContainer} onEnter = {onCampusEnter} />
-          {/*<Route path="/student" component={Students} />*/}
         <Route path = "/student" component = {StudentsContainer} />
         <Route path = "/student/:studentId" component={ViewStudentContainer} onEnter = {onStudentEnter} />
         <Route path="*" component={NotFound} />
