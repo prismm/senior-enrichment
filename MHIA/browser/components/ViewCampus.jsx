@@ -8,7 +8,7 @@ export default function ViewCampus(props) {
     return (
         <div className="selectedCampus">
             <img src={ selectedCampus.imageLink } width="400" height="400" />
-            <h3 className="selectedCampusName">CAMPUS: {selectedCampus.name}</h3>
+            <h2 className="selectedCampusName">CAMPUS: {selectedCampus.name}</h2>
             <Students students={campusStudents} selectedCampus={selectedCampus} />
         </div>
     )

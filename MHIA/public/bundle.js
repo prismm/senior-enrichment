@@ -29917,7 +29917,7 @@
 	        { className: 'selectedCampus' },
 	        _react2.default.createElement('img', { src: selectedCampus.imageLink, width: '400', height: '400' }),
 	        _react2.default.createElement(
-	            'h3',
+	            'h2',
 	            { className: 'selectedCampusName' },
 	            'CAMPUS: ',
 	            selectedCampus.name

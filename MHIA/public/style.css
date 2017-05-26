@@ -15,6 +15,11 @@ a {
     text-decoration: none;
 }
 
+h2 {
+    font-family: Courier New, Courier, monospace;
+    font-weight: bold;
+}
+
 h3 {
     font-family: Courier New, Courier, monospace;
     font-weight: bold;

@@ -11,11 +11,15 @@ router.get('/', (req, res, next) => {
         .catch(next)
 })
 
-router.get('studentId', (req, res, next, id) => {
-    Student.findById(id)
-        .then(student => {
-            if (student) res.json(student);
-            else throw new Error('student not found')
+router.param('studentId', (req, res, next, id) => {
+    Student.findOne({ where: { id }, include: [Campus] })
+        // Student.findById(id)
+        .then(foundStudent => {
+            if (foundStudent) {
+                req.student = foundStudent;
+                next();
+                return null;
+            } else { throw new Error('student not found') }
         })
         .catch(next)
 })
