@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
-import AddStudentForm from './AddStudentForm'
+import AddStudentContainer from '../containers/AddStudentContainer'
 
 export default function Students(props) {
     const students = props.students;
     const campuses = props.campuses;
+    const deleteStudent = props.deleteStudent;
     return (
         <div>
             <h3 className="ourStudentsHeader">Our Students</h3>
@@ -17,7 +18,7 @@ export default function Students(props) {
                         {/*<td>Remove Student?</td>*/}
                     </tr>
                     {
-                    students.length ? students.map(student => (
+                    students && students.length ? students.map(student => (
                         <tr key={ student.id }>
                             <td>
                                 <Link to={`/student/${student.id}`}>{ student.name }</Link>
@@ -28,7 +29,7 @@ export default function Students(props) {
                                     : <Link to={`/campus/${student.campusId}`}>{ props.selectedCampus.name } </Link>}
                             </td>
                             <td>
-                                <Link className="deleteLink btn">X</Link>
+                                <Link className="deleteLink btn" onClick={deleteStudent(student)}>X</Link>
                             </td>
                         </tr>
                     ))
@@ -36,7 +37,7 @@ export default function Students(props) {
                     }
                 </tbody>
             </table>
-            <AddStudentForm campuses={campuses} />
+            <AddStudentContainer campuses={campuses} />
         </div>
     )
 }

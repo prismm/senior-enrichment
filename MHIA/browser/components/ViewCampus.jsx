@@ -1,5 +1,6 @@
 import React from 'react';
 import Students from '../components/Students';
+// import StudentsContainer from '../containers/StudentsContainer'
 
 export default function ViewCampus(props) {
     const selectedCampus = props.selectedCampus;

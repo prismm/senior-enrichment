@@ -1,6 +1,7 @@
 import ViewStudent from '../components/ViewStudent';
 import { connect } from 'react-redux';
 
+
 const mapStateToProps = (state) => {
     return {
         selectedStudent: state.students.selected

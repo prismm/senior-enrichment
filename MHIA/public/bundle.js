@@ -81,11 +81,11 @@
 	
 	var _Students2 = _interopRequireDefault(_Students);
 	
-	var _ViewCampusContainer = __webpack_require__(276);
+	var _ViewCampusContainer = __webpack_require__(309);
 	
 	var _ViewCampusContainer2 = _interopRequireDefault(_ViewCampusContainer);
 	
-	var _ViewStudentContainer = __webpack_require__(278);
+	var _ViewStudentContainer = __webpack_require__(311);
 	
 	var _ViewStudentContainer2 = _interopRequireDefault(_ViewStudentContainer);
 	
@@ -93,13 +93,13 @@
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
-	var _store = __webpack_require__(309);
+	var _store = __webpack_require__(313);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _campus = __webpack_require__(322);
+	var _campus = __webpack_require__(325);
 	
-	var _student = __webpack_require__(323);
+	var _student = __webpack_require__(278);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -29732,19 +29732,26 @@
 	
 	var _reactRedux = __webpack_require__(182);
 	
+	var _student = __webpack_require__(278);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	    console.log("state on container", state);
 	    return {
 	        students: state.students.list,
 	        campuses: state.campuses.list
 	    };
 	};
 	
-	// const mapDispatchToProps =
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	    return {
+	        deleteStudent: function deleteStudent(student) {
+	            dispatch((0, _student.deleteStudent)(student));
+	        }
+	    };
+	};
 	
-	var StudentsContainer = (0, _reactRedux.connect)(mapStateToProps)(_Students2.default);
+	var StudentsContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Students2.default);
 	
 	exports.default = StudentsContainer;
 
@@ -29765,15 +29772,16 @@
 	
 	var _reactRouter = __webpack_require__(214);
 	
-	var _AddStudentForm = __webpack_require__(324);
+	var _AddStudentContainer = __webpack_require__(276);
 	
-	var _AddStudentForm2 = _interopRequireDefault(_AddStudentForm);
+	var _AddStudentContainer2 = _interopRequireDefault(_AddStudentContainer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function Students(props) {
 	    var students = props.students;
 	    var campuses = props.campuses;
+	    var deleteStudent = props.deleteStudent;
 	    return _react2.default.createElement(
 	        'div',
 	        null,
@@ -29807,7 +29815,7 @@
 	                        'Campus'
 	                    )
 	                ),
-	                students.length ? students.map(function (student) {
+	                students && students.length ? students.map(function (student) {
 	                    return _react2.default.createElement(
 	                        'tr',
 	                        { key: student.id },
@@ -29845,7 +29853,7 @@
 	                            null,
 	                            _react2.default.createElement(
 	                                _reactRouter.Link,
-	                                { className: 'deleteLink btn' },
+	                                { className: 'deleteLink btn', onClick: deleteStudent(student) },
 	                                'X'
 	                            )
 	                        )
@@ -29857,7 +29865,7 @@
 	                )
 	            )
 	        ),
-	        _react2.default.createElement(_AddStudentForm2.default, { campuses: campuses })
+	        _react2.default.createElement(_AddStudentContainer2.default, { campuses: campuses })
 	    );
 	}
 
@@ -29871,63 +29879,194 @@
 	    value: true
 	});
 	
-	var _ViewCampus = __webpack_require__(277);
-	
-	var _ViewCampus2 = _interopRequireDefault(_ViewCampus);
-	
-	var _reactRedux = __webpack_require__(182);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var mapStateToProps = function mapStateToProps(state) {
-	    console.log('selectedCampuses in container', state.campuses.selected);
-	    return {
-	        selectedCampus: state.campuses.selected,
-	        campuses: state.campuses.list,
-	        campusStudents: state.campuses.campusStudents
-	    };
-	};
-	
-	var ViewCampusContainer = (0, _reactRedux.connect)(mapStateToProps)(_ViewCampus2.default);
-	
-	exports.default = ViewCampusContainer;
-
-/***/ }),
-/* 277 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = ViewCampus;
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Students = __webpack_require__(275);
+	var _AddStudentForm = __webpack_require__(277);
 	
-	var _Students2 = _interopRequireDefault(_Students);
+	var _AddStudentForm2 = _interopRequireDefault(_AddStudentForm);
+	
+	var _student = __webpack_require__(278);
+	
+	var _reactRedux = __webpack_require__(182);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function ViewCampus(props) {
-	    var selectedCampus = props.selectedCampus;
-	    var campusStudents = props.campusStudents;
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	    return {
+	        addNewStudent: function addNewStudent(newStudent) {
+	            dispatch((0, _student.addStudent)(newStudent));
+	        }
+	    };
+	};
+	
+	// const mapStateToProps = (state, ownProps) => {
+	//     return {
+	//         // campuses: state.campuses
+	//     }
+	// }
+	
+	var AddStudentContainer = function (_Component) {
+	    _inherits(AddStudentContainer, _Component);
+	
+	    function AddStudentContainer(props) {
+	        _classCallCheck(this, AddStudentContainer);
+	
+	        var _this = _possibleConstructorReturn(this, (AddStudentContainer.__proto__ || Object.getPrototypeOf(AddStudentContainer)).call(this, props));
+	        // console.log(props);
+	
+	
+	        _this.state = {
+	            name: '',
+	            email: '',
+	            campusId: 1
+	        };
+	        console.log(_this.state.campusId);
+	        _this.handleEmailChange = _this.handleEmailChange.bind(_this);
+	        _this.handleNameChange = _this.handleNameChange.bind(_this);
+	        _this.handleCampusSelect = _this.handleCampusSelect.bind(_this);
+	        _this.handleSubmit = _this.handleSubmit.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(AddStudentContainer, [{
+	        key: 'handleEmailChange',
+	        value: function handleEmailChange(evt) {
+	            var email = evt.target.value;
+	            this.setState({
+	                email: email
+	            });
+	            // console.log("EMAIL CHANGE", evt.target.value)
+	        }
+	    }, {
+	        key: 'handleNameChange',
+	        value: function handleNameChange(evt) {
+	            var name = evt.target.value;
+	            this.setState({
+	                name: name
+	            });
+	            // console.log("NAME CHANGE", evt.target.value)
+	        }
+	    }, {
+	        key: 'handleCampusSelect',
+	        value: function handleCampusSelect(evt) {
+	            var campusId = evt.target.value;
+	            console.log(campusId);
+	            this.setState({
+	                campusId: campusId
+	            });
+	        }
+	    }, {
+	        key: 'handleSubmit',
+	        value: function handleSubmit(evt) {
+	            evt.preventDefault();
+	            console.log("STATE UPON SUBMIT", this.state);
+	            if (!this.state.name || !this.state.email) {
+	                alert("You must enter a name and email to enroll a new student -- Thanks!");
+	                return;
+	            }
+	            this.props.addNewStudent(this.state);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var inputs = this.state;
+	            return _react2.default.createElement(_AddStudentForm2.default, {
+	                campuses: this.props.campuses,
+	                handleNameChange: this.handleNameChange,
+	                handleEmailChange: this.handleEmailChange,
+	                handleCampusSelect: this.handleCampusSelect,
+	                handleSubmit: this.handleSubmit,
+	                inputs: inputs
+	            });
+	        }
+	    }]);
+	
+	    return AddStudentContainer;
+	}(_react.Component);
+	
+	exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(AddStudentContainer);
+
+/***/ }),
+/* 277 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = AddStudentForm;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function AddStudentForm(props) {
+	    var campuses = props.campuses;
+	
+	    var handleEmailChange = props.handleEmailChange;
+	    var handleNameChange = props.handleNameChange;
+	    var handleCampusSelect = props.handleCampusSelect;
+	    var handleSubmit = props.handleSubmit;
 	
 	    return _react2.default.createElement(
-	        'div',
-	        { className: 'selectedCampus' },
-	        _react2.default.createElement('img', { src: selectedCampus.imageLink, width: '400', height: '400' }),
+	        "div",
+	        null,
 	        _react2.default.createElement(
-	            'h2',
-	            { className: 'selectedCampusName' },
-	            'CAMPUS: ',
-	            selectedCampus.name
+	            "h3",
+	            { className: "ourStudentsHeader" },
+	            " Enroll a New Student "
 	        ),
-	        _react2.default.createElement(_Students2.default, { students: campusStudents, selectedCampus: selectedCampus, campuses: [selectedCampus] })
+	        _react2.default.createElement(
+	            "form",
+	            null,
+	            _react2.default.createElement(
+	                "td",
+	                null,
+	                _react2.default.createElement("input", { type: "text", placeholder: "Name?", className: "studentNameInput", onChange: handleNameChange })
+	            ),
+	            _react2.default.createElement(
+	                "td",
+	                null,
+	                _react2.default.createElement("input", { type: "text", placeholder: "Email?", className: "studentEmailInput", onChange: handleEmailChange })
+	            ),
+	            _react2.default.createElement(
+	                "td",
+	                null,
+	                _react2.default.createElement(
+	                    "select",
+	                    { className: "selectCampus", onChange: handleCampusSelect },
+	                    campuses && campuses.map(function (campus) {
+	                        return _react2.default.createElement(
+	                            "option",
+	                            { key: campus.id, value: campus.id },
+	                            campus.name
+	                        );
+	                    })
+	                )
+	            ),
+	            _react2.default.createElement(
+	                "td",
+	                null,
+	                _react2.default.createElement(
+	                    "button",
+	                    { type: "submit", onClick: handleSubmit },
+	                    "Add Student"
+	                )
+	            )
+	        )
 	    );
 	}
 
@@ -29940,78 +30079,120 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.getStudentById = exports.updateStudent = exports.deleteStudent = exports.addStudent = exports.remove = exports.update = exports.create = exports.receiveStudent = exports.receiveStudents = undefined;
 	
-	var _ViewStudent = __webpack_require__(279);
+	var _constants = __webpack_require__(279);
 	
-	var _ViewStudent2 = _interopRequireDefault(_ViewStudent);
+	var _axios = __webpack_require__(280);
 	
-	var _reactRedux = __webpack_require__(182);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var mapStateToProps = function mapStateToProps(state) {
-	    return {
-	        selectedStudent: state.students.selected
-	    };
-	};
-	
-	var ViewStudentContainer = (0, _reactRedux.connect)(mapStateToProps)(_ViewStudent2.default);
-	
-	exports.default = ViewStudentContainer;
-
-/***/ }),
-/* 279 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = ViewStudent;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
+	var _axios2 = _interopRequireDefault(_axios);
 	
 	var _reactRouter = __webpack_require__(214);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function ViewStudent(props) {
-	    var selectedStudent = props.selectedStudent;
-	    return _react2.default.createElement(
-	        'div',
-	        null,
-	        selectedStudent.campus && _react2.default.createElement(
-	            'h2',
-	            null,
-	            'STUDENT: ',
-	            selectedStudent.name
-	        ),
-	        _react2.default.createElement(
-	            'ul',
-	            null,
-	            _react2.default.createElement(
-	                'li',
-	                null,
-	                'email: ',
-	                selectedStudent.email
-	            ),
-	            selectedStudent.campus && _react2.default.createElement(
-	                'li',
-	                null,
-	                'campus: ',
-	                _react2.default.createElement(
-	                    _reactRouter.Link,
-	                    { to: '/campus/' + selectedStudent.campus.id },
-	                    selectedStudent.campus.name,
-	                    ' '
-	                )
-	            )
-	        )
-	    );
-	}
+	//ACTION CREATORS ------------------------------------
+	
+	var receiveStudents = exports.receiveStudents = function receiveStudents(students) {
+	    return {
+	        type: _constants.RECEIVE_STUDENTS,
+	        students: students
+	    };
+	};
+	
+	var receiveStudent = exports.receiveStudent = function receiveStudent(student) {
+	    return {
+	        type: _constants.RECEIVE_STUDENT,
+	        student: student
+	    };
+	};
+	
+	var create = exports.create = function create(student) {
+	    return {
+	        type: _constants.ADD_STUDENT,
+	        student: student
+	    };
+	};
+	
+	var update = exports.update = function update(student) {
+	    return {
+	        type: _constants.UPDATE_STUDENT,
+	        student: student
+	    };
+	};
+	
+	var remove = exports.remove = function remove(student) {
+	    return {
+	        type: _constants.DELETE_STUDENT,
+	        student: student
+	    };
+	};
+	
+	//DISPATCHERS ---------------------------------------
+	
+	var addStudent = exports.addStudent = function addStudent(newStudent) {
+	
+	    return function (dispatch) {
+	        return _axios2.default.post('/api/student/', { email: newStudent.email, name: newStudent.name, campusId: newStudent.campusId }).then(function (res) {
+	            return dispatch(create(res.data));
+	        }).then(function (student) {
+	            _reactRouter.hashHistory.push('/student/' + student.id);
+	        }).catch(function (err) {
+	            return console.error(err);
+	        });
+	    };
+	};
+	
+	var deleteStudent = exports.deleteStudent = function deleteStudent(student) {
+	    return function (dispatch) {
+	        return _axios2.default.delete('/api/student/' + student.id).then(function (res) {
+	            return dispatch(remove(res.data));
+	        }).catch(function (err) {
+	            return console.error(err);
+	        });
+	    };
+	};
+	
+	var updateStudent = exports.updateStudent = function updateStudent(student) {
+	    return function (dispatch) {
+	        return _axios2.default.put('/api/student/' + student.id, { email: updateStudent.email, name: updateStudent.name, campusId: updateStudent.campusId }).then(function (res) {
+	            return dispatch(update(res.data));
+	        }).then(function () {
+	            _reactRouter.hashHistory.push('/student/' + student.id);
+	        }).catch(function (err) {
+	            return console.error(err);
+	        });
+	    };
+	};
+	
+	var getStudentById = exports.getStudentById = function getStudentById(studentId) {
+	    return function (dispatch) {
+	        _axios2.default.get('/api/student/' + studentId).then(function (student) {
+	            dispatch(receiveStudent(student.data));
+	        }).catch(function (err) {
+	            return console.error(err);
+	        });
+	    };
+	};
+
+/***/ }),
+/* 279 */
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var RECEIVE_STUDENT = exports.RECEIVE_STUDENT = 'RECEIVE_STUDENT';
+	var RECEIVE_STUDENTS = exports.RECEIVE_STUDENTS = 'RECEIVE_STUDENTS';
+	var ADD_STUDENT = exports.ADD_STUDENT = 'ADD_STUDENT';
+	var DELETE_STUDENT = exports.DELETE_STUDENT = 'DELETE_STUDENT';
+	var UPDATE_STUDENT = exports.UPDATE_STUDENT = 'UPDATE_STUDENT';
+	
+	var RECEIVE_CAMPUSES = exports.RECEIVE_CAMPUSES = 'RECEIVE_CAMPUSES';
+	var RECEIVE_CAMPUS = exports.RECEIVE_CAMPUS = 'RECEIVE_CAMPUS';
+	var RECEIVE_CAMPUS_STUDENTS = exports.RECEIVE_CAMPUS_STUDENTS = 'RECEIVE_CAMPUS_STUDENTS';
 
 /***/ }),
 /* 280 */
@@ -33546,26 +33727,26 @@
 	    value: true
 	});
 	
-	var _redux = __webpack_require__(191);
+	var _ViewCampus = __webpack_require__(310);
 	
-	var _reducers = __webpack_require__(310);
+	var _ViewCampus2 = _interopRequireDefault(_ViewCampus);
 	
-	var _reducers2 = _interopRequireDefault(_reducers);
-	
-	var _reduxLogger = __webpack_require__(314);
-	
-	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
-	
-	var _reduxThunk = __webpack_require__(320);
-	
-	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-	
-	var _reduxDevtoolsExtension = __webpack_require__(321);
+	var _reactRedux = __webpack_require__(182);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	// https://github.com/evgenyrodionov/redux-logger
-	exports.default = (0, _redux.createStore)(_reducers2.default, (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)()))); // https://github.com/gaearon/redux-thunk
+	var mapStateToProps = function mapStateToProps(state) {
+	
+	    return {
+	        selectedCampus: state.campuses.selected,
+	        campuses: state.campuses.list,
+	        campusStudents: state.campuses.campusStudents
+	    };
+	};
+	
+	var ViewCampusContainer = (0, _reactRedux.connect)(mapStateToProps)(_ViewCampus2.default);
+	
+	exports.default = ViewCampusContainer;
 
 /***/ }),
 /* 310 */
@@ -33576,14 +33757,168 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = ViewCampus;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Students = __webpack_require__(275);
+	
+	var _Students2 = _interopRequireDefault(_Students);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// import StudentsContainer from '../containers/StudentsContainer'
+	
+	function ViewCampus(props) {
+	    var selectedCampus = props.selectedCampus;
+	    var campusStudents = props.campusStudents;
+	
+	    return _react2.default.createElement(
+	        'div',
+	        { className: 'selectedCampus' },
+	        _react2.default.createElement('img', { src: selectedCampus.imageLink, width: '400', height: '400' }),
+	        _react2.default.createElement(
+	            'h2',
+	            { className: 'selectedCampusName' },
+	            'CAMPUS: ',
+	            selectedCampus.name
+	        ),
+	        _react2.default.createElement(_Students2.default, { students: campusStudents, selectedCampus: selectedCampus, campuses: [selectedCampus] })
+	    );
+	}
+
+/***/ }),
+/* 311 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _ViewStudent = __webpack_require__(312);
+	
+	var _ViewStudent2 = _interopRequireDefault(_ViewStudent);
+	
+	var _reactRedux = __webpack_require__(182);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        selectedStudent: state.students.selected
+	    };
+	};
+	
+	var ViewStudentContainer = (0, _reactRedux.connect)(mapStateToProps)(_ViewStudent2.default);
+	
+	exports.default = ViewStudentContainer;
+
+/***/ }),
+/* 312 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = ViewStudent;
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(214);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function ViewStudent(props) {
+	    var selectedStudent = props.selectedStudent;
+	    return _react2.default.createElement(
+	        'div',
+	        null,
+	        selectedStudent.campus && _react2.default.createElement(
+	            'h2',
+	            null,
+	            'STUDENT: ',
+	            selectedStudent.name
+	        ),
+	        _react2.default.createElement(
+	            'ul',
+	            null,
+	            _react2.default.createElement(
+	                'li',
+	                null,
+	                'email: ',
+	                selectedStudent.email
+	            ),
+	            selectedStudent.campus && _react2.default.createElement(
+	                'li',
+	                null,
+	                'campus: ',
+	                _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: '/campus/' + selectedStudent.campus.id },
+	                    selectedStudent.campus.name,
+	                    ' '
+	                )
+	            )
+	        )
+	    );
+	}
+
+/***/ }),
+/* 313 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	
 	var _redux = __webpack_require__(191);
 	
-	var _campusReducer = __webpack_require__(311);
+	var _reducers = __webpack_require__(314);
+	
+	var _reducers2 = _interopRequireDefault(_reducers);
+	
+	var _reduxLogger = __webpack_require__(317);
+	
+	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
+	
+	var _reduxThunk = __webpack_require__(323);
+	
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+	
+	var _reduxDevtoolsExtension = __webpack_require__(324);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// https://github.com/evgenyrodionov/redux-logger
+	exports.default = (0, _redux.createStore)(_reducers2.default, (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger2.default)()))); // https://github.com/gaearon/redux-thunk
+
+/***/ }),
+/* 314 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _redux = __webpack_require__(191);
+	
+	var _campusReducer = __webpack_require__(315);
 	
 	var _campusReducer2 = _interopRequireDefault(_campusReducer);
 	
-	var _studentReducer = __webpack_require__(313);
+	var _studentReducer = __webpack_require__(316);
 	
 	var _studentReducer2 = _interopRequireDefault(_studentReducer);
 	
@@ -33597,7 +33932,7 @@
 	exports.default = rootReducer;
 
 /***/ }),
-/* 311 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33632,7 +33967,7 @@
 	    return newState;
 	};
 	
-	var _constants = __webpack_require__(312);
+	var _constants = __webpack_require__(279);
 	
 	var initialCampusState = {
 	    selected: {},
@@ -33641,23 +33976,7 @@
 	};
 
 /***/ }),
-/* 312 */
-/***/ (function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var RECEIVE_STUDENT = exports.RECEIVE_STUDENT = 'RECEIVE_STUDENT';
-	var RECEIVE_STUDENTS = exports.RECEIVE_STUDENTS = 'RECEIVE_STUDENTS';
-	
-	var RECEIVE_CAMPUSES = exports.RECEIVE_CAMPUSES = 'RECEIVE_CAMPUSES';
-	var RECEIVE_CAMPUS = exports.RECEIVE_CAMPUS = 'RECEIVE_CAMPUS';
-	var RECEIVE_CAMPUS_STUDENTS = exports.RECEIVE_CAMPUS_STUDENTS = 'RECEIVE_CAMPUS_STUDENTS';
-
-/***/ }),
-/* 313 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33681,6 +34000,19 @@
 	            newState.selected = action.student;
 	            break;
 	
+	        case _constants.ADD_STUDENT:
+	            return newState.list.concat([action.student]);
+	
+	        case _constants.DELETE_STUDENT:
+	            return newState.list.filter(function (student) {
+	                return student.id !== action.student.id;
+	            });
+	
+	        case _constants.UPDATE_STUDENT:
+	            return newState.list.filter(function (student) {
+	                return action.student.id === student.id ? action.student : student;
+	            });
+	
 	        default:
 	            return state;
 	    }
@@ -33688,7 +34020,7 @@
 	    return newState;
 	};
 	
-	var _constants = __webpack_require__(312);
+	var _constants = __webpack_require__(279);
 	
 	var initialStudentState = {
 	    selected: {},
@@ -33696,7 +34028,7 @@
 	};
 
 /***/ }),
-/* 314 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33708,11 +34040,11 @@
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _core = __webpack_require__(315);
+	var _core = __webpack_require__(318);
 	
-	var _helpers = __webpack_require__(316);
+	var _helpers = __webpack_require__(319);
 	
-	var _defaults = __webpack_require__(319);
+	var _defaults = __webpack_require__(322);
 	
 	var _defaults2 = _interopRequireDefault(_defaults);
 	
@@ -33834,7 +34166,7 @@
 
 
 /***/ }),
-/* 315 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33847,9 +34179,9 @@
 	
 	exports.printBuffer = printBuffer;
 	
-	var _helpers = __webpack_require__(316);
+	var _helpers = __webpack_require__(319);
 	
-	var _diff = __webpack_require__(317);
+	var _diff = __webpack_require__(320);
 	
 	var _diff2 = _interopRequireDefault(_diff);
 	
@@ -33980,7 +34312,7 @@
 	}
 
 /***/ }),
-/* 316 */
+/* 319 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -34004,7 +34336,7 @@
 	var timer = exports.timer = typeof performance !== "undefined" && performance !== null && typeof performance.now === "function" ? performance : Date;
 
 /***/ }),
-/* 317 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34014,7 +34346,7 @@
 	});
 	exports.default = diffLogger;
 	
-	var _deepDiff = __webpack_require__(318);
+	var _deepDiff = __webpack_require__(321);
 	
 	var _deepDiff2 = _interopRequireDefault(_deepDiff);
 	
@@ -34103,7 +34435,7 @@
 	module.exports = exports['default'];
 
 /***/ }),
-/* 318 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -34532,7 +34864,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 319 */
+/* 322 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -34583,7 +34915,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 320 */
+/* 323 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -34611,7 +34943,7 @@
 	exports['default'] = thunk;
 
 /***/ }),
-/* 321 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -34637,7 +34969,7 @@
 
 
 /***/ }),
-/* 322 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34647,7 +34979,7 @@
 	});
 	exports.getCampusById = exports.receiveCampusStudents = exports.receiveCampus = exports.receiveCampuses = undefined;
 	
-	var _constants = __webpack_require__(312);
+	var _constants = __webpack_require__(279);
 	
 	var _axios = __webpack_require__(280);
 	
@@ -34685,127 +35017,6 @@
 	        });
 	    };
 	};
-
-/***/ }),
-/* 323 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.getStudentById = exports.receiveStudent = exports.receiveStudents = undefined;
-	
-	var _constants = __webpack_require__(312);
-	
-	var _axios = __webpack_require__(280);
-	
-	var _axios2 = _interopRequireDefault(_axios);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var receiveStudents = exports.receiveStudents = function receiveStudents(students) {
-	    return {
-	        type: _constants.RECEIVE_STUDENTS,
-	        students: students
-	    };
-	};
-	
-	var receiveStudent = exports.receiveStudent = function receiveStudent(student) {
-	    return {
-	        type: _constants.RECEIVE_STUDENT,
-	        student: student
-	    };
-	};
-	
-	var getStudentById = exports.getStudentById = function getStudentById(studentId) {
-	    return function (dispatch) {
-	        _axios2.default.get('/api/student/' + studentId).then(function (student) {
-	            dispatch(receiveStudent(student.data));
-	        });
-	    };
-	};
-
-/***/ }),
-/* 324 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = AddStudentForm;
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function AddStudentForm(props) {
-	    var campuses = props.campuses;
-	    return _react2.default.createElement(
-	        "div",
-	        null,
-	        _react2.default.createElement(
-	            "h3",
-	            { className: "ourStudentsHeader" },
-	            " Enroll a New Student "
-	        ),
-	        _react2.default.createElement(
-	            "table",
-	            null,
-	            _react2.default.createElement(
-	                "tbody",
-	                null,
-	                _react2.default.createElement(
-	                    "tr",
-	                    null,
-	                    _react2.default.createElement(
-	                        "form",
-	                        null,
-	                        _react2.default.createElement(
-	                            "td",
-	                            null,
-	                            _react2.default.createElement("input", { type: "text", placeholder: "Name?", className: "studentNameInput" })
-	                        ),
-	                        _react2.default.createElement(
-	                            "td",
-	                            null,
-	                            _react2.default.createElement("input", { type: "text", placeholder: "Email?", className: "studentEmailInput" })
-	                        ),
-	                        _react2.default.createElement(
-	                            "td",
-	                            null,
-	                            _react2.default.createElement(
-	                                "select",
-	                                { className: "selectCampus" },
-	                                campuses && campuses.map(function (campus) {
-	                                    return _react2.default.createElement(
-	                                        "option",
-	                                        { value: campus.id },
-	                                        campus.name
-	                                    );
-	                                })
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            "td",
-	                            null,
-	                            _react2.default.createElement(
-	                                "button",
-	                                { type: "submit" },
-	                                "Add Student"
-	                            )
-	                        )
-	                    )
-	                )
-	            )
-	        )
-	    );
-	}
 
 /***/ })
 /******/ ]);
