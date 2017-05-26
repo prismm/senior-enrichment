@@ -1,12 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 export default function ViewStudent(props) {
-    const selectedStudent = props.student;
-
+    const selectedStudent = props.selectedStudent;
     return (
         <div>
-            <h3>PLACEHOLDER FOR ViewStudent</h3>
-            <h3>${selectedStudent.name}</h3>
+            {selectedStudent.campus && <h2>STUDENT: {selectedStudent.name}</h2>}
+            <ul>
+                <li>email: {selectedStudent.email}</li>
+                {selectedStudent.campus && 
+                <li>campus: <Link to={`/campus/${selectedStudent.campus.id}`}>{ selectedStudent.campus.name } </Link></li>
+                }
+            </ul>
         </div>
     )
 }

@@ -51,6 +51,15 @@ small {
     font-style: italic;
 }
 
+ul {
+    font-family: Courier New, Courier, monospace;
+}
+
+li {
+    font-size: 20px;
+    padding: 5px 0 0 0;
+}
+
 .menu-item {
     display: inline;
     font-family: Courier New, Courier, monospace;

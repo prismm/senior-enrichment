@@ -29969,24 +29969,41 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRouter = __webpack_require__(214);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function ViewStudent(props) {
-	    var selectedStudent = props.student;
-	
+	    var selectedStudent = props.selectedStudent;
 	    return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(
-	            'h3',
+	        selectedStudent.campus && _react2.default.createElement(
+	            'h2',
 	            null,
-	            'PLACEHOLDER FOR ViewStudent'
+	            'STUDENT: ',
+	            selectedStudent.name
 	        ),
 	        _react2.default.createElement(
-	            'h3',
+	            'ul',
 	            null,
-	            '$',
-	            selectedStudent.name
+	            _react2.default.createElement(
+	                'li',
+	                null,
+	                'email: ',
+	                selectedStudent.email
+	            ),
+	            selectedStudent.campus && _react2.default.createElement(
+	                'li',
+	                null,
+	                'campus: ',
+	                _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: '/campus/' + selectedStudent.campus.id },
+	                    selectedStudent.campus.name,
+	                    ' '
+	                )
+	            )
 	        )
 	    );
 	}
